@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Advanced-sky-gui-cooja-plugin : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Advanced-sky-gui-cooja-plugin</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/marioros/advanced-sky-gui-cooja-plugin">View on GitHub</a>
+
+          <h1 id="project_title">Advanced-sky-gui-cooja-plugin</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/marioros/advanced-sky-gui-cooja-plugin/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/marioros/advanced-sky-gui-cooja-plugin/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="advanced-sky-gui-cooja-plugin" class="anchor" href="#advanced-sky-gui-cooja-plugin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced Sky GUI Cooja Plugin</h1>
+
+<h2>
+<a id="" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a> </h2>
+
+<h2>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+
+<p> </p>
+
+<p>The Advanced Sky GUI Plug-in for Cooja Simulator is an interactive graphic interface, which adds to the standard sky mote interface, the capability to stimulate the ADC ports, and to move the mote in a simulated environment. It allows the following operations:</p>
+
+<ul>
+<li>Simulate the PAR and TRS sensors</li>
+<li>Apply the simulated analog signals on 8 Sky ADC ports</li>
+<li>Move the mote around</li>
+<li>Use the serial port, reset button, user button and LEDs
+&gt;</li>
+</ul>
+
+<p>The Advanced Sky GUI Plug-in for Cooja Simulator is composed by the following parts:</p>
+
+<ul>
+<li>Analog sliders for 8 analog ports</li>
+<li>Joystick to move mote around</li>
+<li>Reset button</li>
+<li>User button</li>
+<li>Three working LEDs</li>
+<li>Serial Port</li>
+</ul>
+
+<hr>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p> </p>
+
+<p>The following steps outline how to install the Advanced Sky GUI Plug-in:
+1. Download the Advanced Sky GUI Plug-in code
+2. After Downloading it, you have to place it on the following path (extract the folder in case it is compressed):</p>
+
+<div class="highlight highlight-sh"><pre>YOUR_CONTIKI_FOLDER/tools/cooja/apps
+</pre></div>
+
+<ol>
+<li>Modify the build.xml file in the Cooja folder:</li>
+</ol>
+
+<div class="highlight highlight-sh"><pre>YOUR_CONTIKI_FOLDER/tools/cooja
+</pre></div>
+
+<p>and add:</p>
+
+<div class="highlight highlight-sh"><pre>&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/sky_gui"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+</pre></div>
+
+<p>to the following code:</p>
+
+<div class="highlight highlight-sh"><pre>&lt;target <span class="nv">name</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">depends</span><span class="o">=</span><span class="s2">"jar_cooja"</span>&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/mrm"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/mspsim"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/avrora"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/serial_socket"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/collect-view"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/powertracker"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/apps/sky_gui"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"jar"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;/target&gt;
+</pre></div>
+
+<blockquote>
+</blockquote>
+
+<p>and also add this line:</p>
+
+<div class="highlight highlight-sh"><pre>&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/apps/sky_gui"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+</pre></div>
+
+<p>to the following code:</p>
+
+<div class="highlight highlight-sh"><pre>&lt;target <span class="nv">name</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">depends</span><span class="o">=</span><span class="s2">"init"</span>&gt;
+&lt;delete <span class="nv">dir</span><span class="o">=</span><span class="s2">"${build}"</span>/&gt;
+&lt;delete <span class="nv">dir</span><span class="o">=</span><span class="s2">"${dist}"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/mrm"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/mspsim"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/avrora"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/serial_socket"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/collect-view"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/powertracker"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;ant <span class="nv">antfile</span><span class="o">=</span><span class="s2">"build.xml"</span> <span class="nv">dir</span><span class="o">=</span><span class="s2">"apps/apps/sky_gui"</span> <span class="nv">target</span><span class="o">=</span><span class="s2">"clean"</span> <span class="nv">inheritAll</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+&lt;/target&gt;
+</pre></div>
+
+<hr>
+
+<h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<p> </p>
+
+<h3>
+<a id="activating-the-advanced-sky-gui-plug-in" class="anchor" href="#activating-the-advanced-sky-gui-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Activating the Advanced Sky GUI Plug-in</h3>
+
+<p> </p>
+
+<p>In order to interact directly with motes in COOJA, you need to use the Advanced Sky GUI plug-in which you have previously downloaded from here and added to your COOJA folder (this has been explained in the installation procedure). In order to use this plug-in, when running COOJA for the first time, you need to select and activate the plug-in in the COOJA extension list which you can select in "Setting -&gt; COOJA extensions".</p>
+
+<blockquote>
+</blockquote>
+
+<h3>
+<a id="executing-the-advanced-sky-gui-plug-in" class="anchor" href="#executing-the-advanced-sky-gui-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Executing the Advanced Sky GUI Plug-in</h3>
+
+<p> </p>
+
+<p>For each wireless node that interfaces with the Advanced Sky GUI, you have to right click on that mote and to select "Mote tools Sky -&gt; Sky Graphic User Interface". This plugin allows the communication between the mote and the advanced graphic user interface.</p>
+
+<blockquote>
+</blockquote>
+
+<h3>
+<a id="testing-the-advanced-sky-gui-plug-in" class="anchor" href="#testing-the-advanced-sky-gui-plug-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing the Advanced Sky GUI Plug-in</h3>
+
+<p> </p>
+
+<ol>
+<li>Run Collect-View example with two or more Sky nodes</li>
+<li>Open the Collect-view GUI, choose a node in the list "Nodes" and click on the "Sensors -&gt; Light 1" tab</li>
+<li>In Cooja Simlator "Network view" right click on the chosen mote you want to interact with, and select "Mote tools Sky -&gt; Sky Graphic User Interface"</li>
+<li>Check the "PAR ADC 4" checkbox, move the slider and see, in the "Ligth 1" graph, the value of the light to change</li>
+<li>Move the Joystick and see what happens when the node goes out of the radio transmission range</li>
+<li>Send "help" data in the serial port and choose the command you want to execute</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Advanced-sky-gui-cooja-plugin maintained by <a href="https://github.com/marioros">marioros</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
