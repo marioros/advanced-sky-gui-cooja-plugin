@@ -55,16 +55,17 @@ import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemEvent;
-
 import java.awt.image.BufferedImage;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
-
+import java.awt.Font;
 import java.util.Observable;
+import java.util.Hashtable;
 import java.io.IOException;
 import java.util.Observer;
 import java.io.File;
@@ -82,7 +83,6 @@ import javax.swing.Box;
 
 import org.apache.log4j.Priority;
 import org.apache.log4j.Logger;
-
 import org.contikios.cooja.mspmote.interfaces.MspSerial;
 import org.contikios.cooja.mspmote.MspMoteTimeEvent;
 import org.contikios.cooja.interfaces.Position;
@@ -138,14 +138,13 @@ public class sky_gui extends VisPlugin implements MotePlugin {
   private MspMoteTimeEvent releaseButtonEvent;
   private MspMoteTimeEvent pressButtonEvent;
 
-  private Dimension mDimensioneColonnaCentrale = new Dimension(200, 220);
-  private Dimension mDimensioneSliderGrande = new Dimension(120, 30);
-  private Dimension mDimensioneSeriale = new Dimension(400, 100);
-  private Dimension mDimensioneColonna = new Dimension(150, 210);
-  private Dimension mDimensioneTotale = new Dimension(400, 360);
-  private Dimension mDimensioneRiga = new Dimension(150, 30);
+  private Dimension mDimensioneColonnaCentrale = new Dimension(100, 230);
+  private Dimension mDimensioneSliderGrande = new Dimension(100, 30);
+  private Dimension mDimensioneSeriale = new Dimension(380, 100);
+  private Dimension mDimensioneColonna = new Dimension(150, 230);
+  private Dimension mDimensioneTotale = new Dimension(380, 380);
   private Dimension mDimensioneCheck = new Dimension(20, 30);
-  private Dimension mDimensioneTop = new Dimension(400, 33);
+  private Dimension mDimensioneTop = new Dimension(380, 33);
 
   LEDModel mLedModel = new LEDModel();
 
@@ -155,7 +154,6 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    *
    */
   protected class ADCClient implements ADCInput {
-
     byte mPin;
 
     public ADCClient(byte pin) {
@@ -235,14 +233,13 @@ public class sky_gui extends VisPlugin implements MotePlugin {
      *
      */
     public int nextData() {
-
       int value = 1023;
+
       if(myslider == null) {
         return value;
       } else {
         value = myslider.getValue();
       }
-
       return value;
     }
   }
@@ -255,18 +252,13 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    */
   public JPanel getLeftInterface() {
     JPanel panel = new JPanel();
+    panel.setLayout(new GridLayout(5, 1, 0, 0));
 
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(getLedPanel());
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(7, true));
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(6, true));
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(3, true));
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(2, true));
-    panel.add(Box.createVerticalGlue());
 
     panel.setPreferredSize(mDimensioneColonna);
     panel.setSize(mDimensioneColonna);
@@ -282,31 +274,13 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    */
   public JPanel getRightInterface() {
     JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setLayout(new GridLayout(5, 1, 0, 0));
 
-    panel.add(getButtonPanel(new ActionListener() {
-                               @Override
-                               public void actionPerformed(ActionEvent arg0) {
-                                 premiBottone();
-                               }
-                             }, "User Button"));
-    panel.add(Box.createVerticalGlue());
-    panel.add(getButtonPanel(new ActionListener() {
-                               @Override
-                               public void actionPerformed(ActionEvent arg0) {
-                                 skyMote.getCPU().reset();
-                               }
-                             }, "Reset"));
-
-    panel.add(Box.createVerticalGlue());
+    panel.add(getButtonsPanel());
     panel.add(getAdcPanel(4, false));
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(5, false));
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(0, false));
-    panel.add(Box.createVerticalGlue());
     panel.add(getAdcPanel(1, false));
-    panel.add(Box.createVerticalGlue());
 
     panel.setSize(mDimensioneColonna);
     panel.setPreferredSize(mDimensioneColonna);
@@ -322,6 +296,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    */
   public JPanel getBottomInterface() {
     mSerialPort = (MspSerial)skyMote.getInterfaces().getLog();
+
     mSerialPort.addSerialDataObserver(new Observer() {
                                         @Override
                                         public void update(Observable arg0, Object arg1) {
@@ -375,6 +350,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    */
   public JPanel getTopInterface() {
     mMotePosition = skyMote.getInterfaces().getPosition();
+
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.CENTER,
                                    FLOW_LAYOUT_HORIZONTAL_GAP, FLOW_LAYOUT_VERTICAL_GAP));
@@ -402,23 +378,37 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    * @return JPanel
    */
   public JPanel getAdcPanel(int pin, boolean left) {
+    int FPS_MIN = 0;
+    int FPS_MAX = 1024;
+    int FPS_INIT = 0;
     int align = left ? FlowLayout.RIGHT : FlowLayout.LEFT;
 
     JPanel panel = new JPanel();
-    JPanel labelPanel = new JPanel();
-
-    labelPanel.setLayout(new FlowLayout(align, FLOW_LAYOUT_HORIZONTAL_GAP,
-                                        FLOW_LAYOUT_VERTICAL_GAP));
     panel.setLayout(new FlowLayout(align, FLOW_LAYOUT_HORIZONTAL_GAP,
                                    FLOW_LAYOUT_VERTICAL_GAP));
 
-    panel.setPreferredSize(mDimensioneRiga);
-    panel.setSize(mDimensioneRiga);
+    JPanel labelPanel = new JPanel();
+    labelPanel.setLayout(new FlowLayout(align, FLOW_LAYOUT_HORIZONTAL_GAP,
+                                        FLOW_LAYOUT_VERTICAL_GAP));
 
     adcChecks[pin] = new JCustomCheckBox(pin);
     adcChecks[pin].addItemListener(mChangeListener);
 
-    adcSliders[pin] = new JSlider(0, 1023, 0);
+    adcSliders[pin] = new JSlider(FPS_MIN, FPS_MAX, FPS_INIT);
+
+    Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+    labelTable.put(new Integer(FPS_MIN), new JLabel("0V"));
+    labelTable.put(new Integer(FPS_MAX / 2), new JLabel("1.8V"));
+    labelTable.put(new Integer(FPS_MAX), new JLabel("3.3V"));
+    labelTable.get(new Integer(FPS_MIN)).setFont(new Font("Serif", Font.ITALIC, 8));
+    labelTable.get(new Integer(FPS_MAX / 2)).setFont(new Font("Serif", Font.ITALIC, 8));
+    labelTable.get(new Integer(FPS_MAX)).setFont(new Font("Serif", Font.ITALIC, 8));
+
+    adcSliders[pin].setLabelTable(labelTable);
+    adcSliders[pin].setPaintLabels(true);
+    Font font = new Font("Serif", Font.ITALIC, 8);
+    adcSliders[pin].setFont(font);
+
     if(pin == 4) {
       adcLabels[pin] = new JLabel("PAR ADC " + pin);
     } else if(pin == 5) {
@@ -446,6 +436,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
 
     JPanel ret = new JPanel();
     ret.setLayout(new BoxLayout(ret, BoxLayout.Y_AXIS));
+    ret.setPreferredSize(new Dimension(80, 100));
     ret.add(labelPanel);
     ret.add(panel);
     return ret;
@@ -482,6 +473,35 @@ public class sky_gui extends VisPlugin implements MotePlugin {
   }
   /*---------------------------------------------------------------------------*/
   /**
+   *
+   * Get Buttons Panel.
+   *
+   * @return JPanel
+   */
+  public JPanel getButtonsPanel() {
+    JPanel panel = new JPanel();
+
+    panel.setLayout(new FlowLayout(FlowLayout.CENTER,
+                                   FLOW_LAYOUT_HORIZONTAL_GAP, FLOW_LAYOUT_VERTICAL_GAP));
+
+    panel.add(getButton(new ActionListener() {
+                          @Override
+                          public void actionPerformed(ActionEvent arg0) {
+                            premiBottone();
+                          }
+                        }, "Button"));
+
+    panel.add(getButton(new ActionListener() {
+                          @Override
+                          public void actionPerformed(ActionEvent arg0) {
+                            skyMote.getCPU().reset();
+                          }
+                        }, "Reset"));
+
+    return panel;
+  }
+  /*---------------------------------------------------------------------------*/
+  /**
    * Get Button Panel.
    *
    * @param listener
@@ -491,7 +511,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    * @return JPanel
    *
    */
-  public JPanel getButtonPanel(ActionListener listener, String text) {
+  public JPanel getButton(ActionListener listener, String text) {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.LEFT,
                                    FLOW_LAYOUT_HORIZONTAL_GAP, FLOW_LAYOUT_VERTICAL_GAP));
@@ -747,12 +767,11 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    *
    */
   public class LEDView extends JComponent {
-
     private static final long serialVersionUID = 795919797134270088L;
-
+    private Dimension mDimensions;
+    private Color darkColors[];
     private boolean leds[];
     private Color colors[];
-    private Color darkColors[];
 
     PortListener portListener = new PortListener() {
 
@@ -765,8 +784,6 @@ public class sky_gui extends VisPlugin implements MotePlugin {
         mLedModel.aggiornaLed();
       }
     };
-
-    private Dimension mDimensions;
 
     public PortListener getPortListener() {
       return portListener;
@@ -830,11 +847,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
       super.paintComponent(g);
 
       Color current;
-
       int ledRadius = 20;
-
       int xIncrement = 30;
-
       int currentX = (getWidth() - leds.length * xIncrement) / 2;
       int currentY = getHeight() / 2 - ledRadius / 2;
 
@@ -862,14 +876,13 @@ public class sky_gui extends VisPlugin implements MotePlugin {
   private class JCustomCheckBox extends JCheckBox {
 
     private static final long serialVersionUID = 5663754769371544564L;
+    private int posizione = 0;
 
     public JCustomCheckBox(int posizione) {
       super();
       this.posizione = posizione;
       setSelected(false);
     }
-    private int posizione = 0;
-
     public int getPosizione() {
       return posizione;
     }
