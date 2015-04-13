@@ -140,11 +140,11 @@ public class sky_gui extends VisPlugin implements MotePlugin {
 
   private Dimension mDimensioneColonnaCentrale = new Dimension(100, 230);
   private Dimension mDimensioneSliderGrande = new Dimension(100, 30);
-  private Dimension mDimensioneSeriale = new Dimension(380, 100);
-  private Dimension mDimensioneColonna = new Dimension(150, 230);
-  private Dimension mDimensioneTotale = new Dimension(380, 380);
+  private Dimension mDimensioneSeriale = new Dimension(374, 100);
+  private Dimension mDimensioneColonna = new Dimension(137, 230);
+  private Dimension mDimensioneTotale = new Dimension(374, 380);
   private Dimension mDimensioneCheck = new Dimension(20, 30);
-  private Dimension mDimensioneTop = new Dimension(380, 33);
+  private Dimension mDimensioneTop = new Dimension(374, 33);
 
   LEDModel mLedModel = new LEDModel();
 
