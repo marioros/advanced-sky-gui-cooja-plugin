@@ -820,7 +820,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
     /**
      *
      */
-    public LEDView(Color... cols) {
+    public LEDView(Color ... cols) {
       this(3);
 
       for(int i = 0; i < cols.length; i++) {
