@@ -138,13 +138,13 @@ public class sky_gui extends VisPlugin implements MotePlugin {
   private MspMoteTimeEvent releaseButtonEvent;
   private MspMoteTimeEvent pressButtonEvent;
 
-  private Dimension mDimensioneColonnaCentrale = new Dimension(100, 230);
-  private Dimension mDimensioneSliderGrande = new Dimension(100, 30);
-  private Dimension mDimensioneSeriale = new Dimension(374, 100);
-  private Dimension mDimensioneColonna = new Dimension(137, 230);
-  private Dimension mDimensioneTotale = new Dimension(374, 380);
-  private Dimension mDimensioneCheck = new Dimension(20, 30);
-  private Dimension mDimensioneTop = new Dimension(374, 33);
+  private Dimension mMiddleColumnDim = new Dimension(100, 230);
+  private Dimension mSliderDim = new Dimension(100, 30);
+  private Dimension mSerialDim = new Dimension(374, 100);
+  private Dimension mColumnDim = new Dimension(137, 230);
+  private Dimension mTotalDim = new Dimension(374, 380);
+  private Dimension mCheckboxDim = new Dimension(20, 30);
+  private Dimension mTopDim = new Dimension(374, 33);
 
   LEDModel mLedModel = new LEDModel();
 
@@ -211,8 +211,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
       }
     };
 
-    getContentPane().setSize(mDimensioneTotale);
-    getContentPane().setPreferredSize(mDimensioneTotale);
+    getContentPane().setSize(mTotalDim);
+    getContentPane().setPreferredSize(mTotalDim);
     pack();
 
     logger.debug("Starting to listen on port " + (18000 + mote.getID()));
@@ -260,8 +260,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
     panel.add(getAdcPanel(3, true));
     panel.add(getAdcPanel(2, true));
 
-    panel.setPreferredSize(mDimensioneColonna);
-    panel.setSize(mDimensioneColonna);
+    panel.setPreferredSize(mColumnDim);
+    panel.setSize(mColumnDim);
 
     return panel;
   }
@@ -282,8 +282,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
     panel.add(getAdcPanel(0, false));
     panel.add(getAdcPanel(1, false));
 
-    panel.setSize(mDimensioneColonna);
-    panel.setPreferredSize(mDimensioneColonna);
+    panel.setSize(mColumnDim);
+    panel.setPreferredSize(mColumnDim);
 
     return panel;
   }
@@ -310,8 +310,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
                                       });
 
     JPanel serialInterface = mSerialPort.getInterfaceVisualizer();
-    serialInterface.setPreferredSize(mDimensioneSeriale);
-    serialInterface.setSize(mDimensioneSeriale);
+    serialInterface.setPreferredSize(mSerialDim);
+    serialInterface.setSize(mSerialDim);
 
     return serialInterface;
   }
@@ -336,8 +336,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
     picLabel.setAlignmentY(JLabel.CENTER_ALIGNMENT);
     panel.add(picLabel);
 
-    panel.setSize(mDimensioneColonnaCentrale);
-    panel.setPreferredSize(mDimensioneColonnaCentrale);
+    panel.setSize(mMiddleColumnDim);
+    panel.setPreferredSize(mMiddleColumnDim);
 
     return panel;
   }
@@ -362,8 +362,8 @@ public class sky_gui extends VisPlugin implements MotePlugin {
     Joystick levetta = new Joystick();
     panel.add(levetta);
 
-    panel.setSize(mDimensioneTop);
-    panel.setPreferredSize(mDimensioneTop);
+    panel.setSize(mTopDim);
+    panel.setPreferredSize(mTopDim);
 
     return panel;
   }
@@ -417,10 +417,10 @@ public class sky_gui extends VisPlugin implements MotePlugin {
       adcLabels[pin] = new JLabel("ADC " + pin);
     }
 
-    adcSliders[pin].setPreferredSize(mDimensioneSliderGrande);
-    adcChecks[pin].setPreferredSize(mDimensioneCheck);
-    adcSliders[pin].setSize(mDimensioneSliderGrande);
-    adcChecks[pin].setSize(mDimensioneCheck);
+    adcSliders[pin].setPreferredSize(mSliderDim);
+    adcChecks[pin].setPreferredSize(mCheckboxDim);
+    adcSliders[pin].setSize(mSliderDim);
+    adcChecks[pin].setSize(mCheckboxDim);
 
     if(left) {
       panel.add(adcSliders[pin]);
@@ -820,7 +820,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
     /**
      *
      */
-    public LEDView(Color ... cols) {
+    public LEDView(Color... cols) {
       this(3);
 
       for(int i = 0; i < cols.length; i++) {
