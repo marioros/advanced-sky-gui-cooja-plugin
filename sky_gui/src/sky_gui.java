@@ -544,7 +544,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
       case ItemEvent.DESELECTED:
         JCustomCheckBox check = (JCustomCheckBox)arg0.getSource();
 
-        int n = check.getPosizione();
+        int n = check.getPosition();
 
         mChecks[n] = !mChecks[n];
 
@@ -756,7 +756,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
    *
    */
   public class LEDModel extends Observable {
-    public void aggiornaLed() {
+    public void ledUpdate() {
       setChanged();
       notifyObservers();
     }
@@ -781,7 +781,7 @@ public class sky_gui extends VisPlugin implements MotePlugin {
         leds[1] = (data & SkyNode.GREEN_LED) == 0;
         leds[2] = (data & SkyNode.RED_LED) == 0;
 
-        mLedModel.aggiornaLed();
+        mLedModel.ledUpdate();
       }
     };
 
@@ -876,15 +876,15 @@ public class sky_gui extends VisPlugin implements MotePlugin {
   private class JCustomCheckBox extends JCheckBox {
 
     private static final long serialVersionUID = 5663754769371544564L;
-    private int posizione = 0;
+    private int position = 0;
 
     public JCustomCheckBox(int posizione) {
       super();
-      this.posizione = posizione;
+      this.position = posizione;
       setSelected(false);
     }
-    public int getPosizione() {
-      return posizione;
+    public int getPosition() {
+      return position;
     }
   }
   /*---------------------------------------------------------------------------*/
