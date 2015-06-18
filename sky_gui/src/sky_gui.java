@@ -1,8 +1,8 @@
 /*
  * Contiki Sky GUI Plugin
  *
- * Copyright (c) 2014, Dipartimento di Ingegneria dell'Informazione,
- * Università Politecnica delle Marche, Italy
+ * Copyright (c) 2014, Mariorosario Prist
+ * Author: Mariorosario Prist <prist.mario@gmail.com>, Federico Giuggioloni <federico.giuggioloni@gmail.com>
  *
  * All rights reserved.
  *
